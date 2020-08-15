@@ -1,0 +1,609 @@
+2020-04-22 -----------------------------------------------------------------------------------------
+- Fix [README.html]
+  A 'cd' command was missing from the command-line conversion instructions for macOS.
+
+2020-02-03 -----------------------------------------------------------------------------------------
+- Change [splashid]
+  Enhance the debugging output to better help detect custom types and fields.
+
+2020-02-01 -----------------------------------------------------------------------------------------
+- Change [onepif]
+  Sort within a category by an item's title.  Login items still sort first, with other categories
+  following, sorted by their name.
+
+2020-01-28 -----------------------------------------------------------------------------------------
+- Fix [avastpasswords]
+  Handle empty dates in credit cards.
+
+2020-01-27 -----------------------------------------------------------------------------------------
+- New [avastpasswords]
+  New converter Avast Passwords converter converts its JSON file export.
+
+2020-01-26 -----------------------------------------------------------------------------------------
+- New [onepif]
+  Added a link to an external css stylesheet with the name 1P_converted_styles.css which can be used
+  to more easily provide custom styling to users by overriding the embedded CSS stylesheet.
+ 
+2019-09-14 -----------------------------------------------------------------------------------------
+- New [keypass2]
+  Support OTP from the Tray TOTP plug-in.
+
+- New [keypass2]
+  Added a mechanism to globally ignore specific keys.  The @ignored_keys array at the top of this
+  converter can be modified.  All strings are commented out by default.
+
+2019-09-13 -----------------------------------------------------------------------------------------
+- New [keypass2]
+  Support OTP from the keeotp plug-in.
+
+2019-09-12 -----------------------------------------------------------------------------------------
+- Fix [keypass2]
+  The passwords history was not being imported (caused inadvertently by the change that supported
+  --notimestamps).
+
+- Fix [keypass2]
+  Entries with no title would cause a warning.  These are now titled as "Untitled".
+
+2019-07-07 -----------------------------------------------------------------------------------------
+- Fix [keychain]
+  Updated documentation to refer to the new name of the Applescript conversion helper.
+
+2019-06-24 -----------------------------------------------------------------------------------------
+- Fix [roboform]
+  Handle BOM in latest v8 Windows version's export.
+
+2019-06-21 -----------------------------------------------------------------------------------------
+- Fix [lastpass]
+  Handle Lastpass' grouping (folder) hierarchy character to work with 1Password tags.
+
+2019-06-20 -----------------------------------------------------------------------------------------
+- New [Utils/PIF.pm]
+  Defines and handles a new type $k_totp, that will trigger generation of a TOTP type in 1Password.
+
+- New [enpass]
+  The stock login field of TOTP will be properly configured in 1Password.
+
+- New [enpass]
+  The stock login fields of Security question and answer will be placed into an Additional
+  Information section, with answer being properly concealed.
+
+- New [enpass]
+  The password history is now saved for login items.
+
+- New [lastpass]
+  The converter will now split all key:value pairs inside non-Generic notes types.  This makes the
+  fields available for the --addfields option.
+
+- New [lastpass]
+  The %card_field_specs table accepts 'textname' values as either strings or regular expressions.
+  This allows matching multiple template names (their names are exported in the form Custom_###
+  where ### is a sequence of digits).
+
+2019-06-19 -----------------------------------------------------------------------------------------
+- Fix [enpass]
+  Added more category definitions to support the JSON export type: bankacct, driverslicense, email*.
+  * Support for this category is limited due to Enpass' field ambiguity and free-text field values.
+
+2019-06-14 -----------------------------------------------------------------------------------------
+- Fix [lastpass]
+  Handle the various forms of BOM, newline endings, and saved file formats from more recent versions
+  of LastPass via the browser or the extension.
+
+2019-05-22 -----------------------------------------------------------------------------------------
+- Fix [macOSConvertHelper]
+  Script was not correctly building the path to the convert.pl script when the mrc-converter-suite
+  folder was on the Desktop.
+
+2019-04-17 -----------------------------------------------------------------------------------------
+- New [roboform]
+  Supports Roboform 8's CSV export format for Login + Bookmarks.
+
+2019-03-28 -----------------------------------------------------------------------------------------
+- Change [enpass]
+  Add a generic, commented-out entry to catch the 'import.imported' category.  Users can uncomment
+  and customize the field matchers in this definition.  Enpass uses this category for records
+  imported from another password manager; it does not convert the foreign category into its own.
+
+2019-03-19 -----------------------------------------------------------------------------------------
+- Change [convert.pl]
+  Change the Usage information to indicated the converter name preceed any options.  Generally the
+  option positions do not matter, as convert.pl peeks on the command line to find the converter
+  name.  But there is one ambiguous case where the converter is onepif and the --format selected is
+  csv.
+
+2019-03-11 -----------------------------------------------------------------------------------------
+- Change [macOSConvertHelper convert.pl]
+  Removed hardcoded converter names from macOSConverterHelper.  These are now generated by the
+  convert.pl program using the --info macos option.
+
+- Fix [macOSConvertHelper]
+  Avoid error when Terminal is already running, but no shell window is open.
+
+2019-03-10 -----------------------------------------------------------------------------------------
+- Fix [macOSConvertHelper]
+  Update the macOSConvertHelper.app for the new bitwarden converter.
+
+2019-03-09 -----------------------------------------------------------------------------------------
+- New [bitwarden]
+  Initial release of the Bitwarden JSON converter.
+
+2019-02-27 -----------------------------------------------------------------------------------------
+- Fix [enpass]
+  Updated pattern labels due to more changes in Enpass 6.
+ 
+2019-02-22 -----------------------------------------------------------------------------------------
+- Change [README vcard]
+  Documentation updated with new links to conversion help threads on the 1Password forum.
+
+2019-02-03 -----------------------------------------------------------------------------------------
+- Fix [csv]
+  Document the required format of a Login's "Additional URLs" column.
+
+2019-02-02 -----------------------------------------------------------------------------------------
+- New [csv]
+  Login tables now support a column "Additional URLs", the value of which should be a semicolon- or
+  newline-separated list of URLs.  These will be added as supplementary URLs in the Login item's
+  website list (so you can click on them and have them open/fill).
+
+- Change [GetSafari12Passwords]
+  Secondary URLs are no longer placed into the Notes area; instead, they will be placed into a new
+  column "Additional URLs", which is supported by the csv converter (feature is mentioned above).
+
+2019-01-26 -----------------------------------------------------------------------------------------
+- Fix [keepass2]
+  Ignore bogus date values (reported when a user imported a keepass1 db into into keepass2).
+
+2019-01-25 -----------------------------------------------------------------------------------------
+- Fix [csv]
+  Issue mishandling special columns that were not present in the CSV (e.g. tags, notes, created,
+  modified).
+
+2019-01-24 -----------------------------------------------------------------------------------------
+- Change [README.pdf]
+  The README.pdf file has been replaced by a much more useful and user-friendly README.html file.
+  Users can now use their favorite browser to read this guide, jump around via links, and use the
+  browser's Back button to return to their previous location after a jump.  The README.html now
+  walks users through the conversion process much more elegantly.
+
+2019-01-23 -----------------------------------------------------------------------------------------
+- New [chrome]
+  Converter option --username <str> rejects any entry in the saved passwords list if the username in
+  the entry does not match the value "str".  The default is an exact string match.  To match using a
+  regular expression instead, surround str with slashes, with an optional trailing i to ignore case.
+  Example: --username /mrc/i will match MrC and mrc anywhere in the username component.
+
+- Change [AppleScript_Conversion_Helper --> macOSConvertHelper]
+  Renamed the AppleScript_Conversion_Helper to macOSConvertHelper.
+
+- Change [Strawberry Perl]
+  The process for Windows now recommends the installer version of Strawberry Perl instead of the
+  portable version. This greatly simplifies instructions, installation, and clean-up, while reducing
+  confusion.
+
+2019-01-21 -----------------------------------------------------------------------------------------
+- New [csv]
+  Converter now auto-detects file encodings, and supports non-comma separator characters.
+
+- New [csv datavault]
+  Convert supports cross-platform conversion (the export may be exported on one platform, but
+  converted on another).
+
+- New [lastpass]
+  Accepts multiple export files, so that data and Form Fill Profiles can be converted in a single
+  conversion run.
+
+2019-01-20 -----------------------------------------------------------------------------------------
+- Update [Text::CSV module]
+  The Text::CSV module included in lib has been updated to the latest version.  Affected modules:
+  csv dataguardian datavault enpass essentialpim keeper lastpass msecure msecure5 nortonis
+  onepif/csv passpack passwordsplus passwordwallet splashid truekey
+
+- Fix [truekey]
+  Don't die on the garbage dates True Key allows.
+
+2019-01-19 -----------------------------------------------------------------------------------------
+- New [passwordsplus]
+  Converter now works on Windows.
+
+- Change [install_modules.bat]
+  Use App::cpanminus for installing modules.  Updated script to conditionally check for and
+  install modules as needed.  Rerunning the script won't try to reinstall.
+
+- Fix [convert.pl]
+  Support writing UTF-8 to the console by setting the output code page.
+
+2019-01-17 -----------------------------------------------------------------------------------------
+- Change [convert_to_1p4.pl --> convert.pl]
+  The converter driver name conv_to_1p4.pl has been retired.  The new name is convert.pl.  This
+  eliminates a longstanding confusion with users assuming the converter suite was useful only
+  for 1Password 4.
+
+- Change [convert_to_1p4 --> mrc-converter-suite]
+  The archive sub-directory name convert_to_1p4 has been retired.  The new name differs from the
+  converter driver program name to eliminate any confusion between the source directory and the
+  driver program.  The zip archive unpackaged contains the single directory mrc-converter-suite.
+
+- Change [convert.pl]
+  The converter driver convert.pl no longer contains a version number; the package itself
+  will be date-time versioned, and a version file will be included as Version.txt.
+
+- Change [Changes.txt]
+  The changes above required changing the format of this Changes.txt file.  See also the notes for
+  Version 1.11 below.
+
+Version 1.11:
+  Changed:
+  - keepass2: Changed group separator from :: to / so that it will nest as Tags using 1Password's
+    tag hierarchy.
+  - Removed the onepassword-utilities parent directory.  Agilebits is no longer maintaining a
+    separate Git repository for utilities such as the converter suite.  As such, the directory
+    is no superfluous.
+  - Rework how command line options are processed to support changes below.
+  - Support --debug and --verbose mode during the initialization stage of converter loading.
+  - Reworked the Usage message format.  The format is no context sensitive, in that it varies
+    based on whether or not a converter name has been specified, and if that converter requires
+    input files.
+  - AppleScript helper apps are all suffixed with .applescript now.
+  - Renamed Modules directory to lib
+  - txt2notes: Removed a superflous module, its functionality replaced with internal code.
+
+  New: 
+  - csv: The csv converter now supports software licenses.
+  - enpass: Converter handles JSON output new in Enpass 6.
+  - firefox: Initial release of Firefox native converter.
+  - macOS Safari password extraction scripts Get_Safari11_Passwords and Get_Safari12_Passwords
+    added to the convert_to_1p4 suite.
+
+  Fixed:
+  - keychain: Hand openssl a more restrictive key length to accommodate older installs.
+  - keychain: Ignore all NULL entry
+  - keychain: Fix two problems obtaining secure notes: bypass length checks for decoding
+    secure notes data, and simplify RE pattern to grab the note portion in secure notes'
+    XML data.
+  - truekey: Converter reported -1 items as being imported when JSON export was used.
+  - chrome: The base path used for the user profile on macOS was incorrect (copy/paste error)..
+  - convert_to_1p4.pl was not handling the situation where multiple conversion files were
+    passed on the command line and a converter supported only a single file. Converters can now
+    signal that they can accept a file list.  Converters updated: roboform, txt2notes.
+  - The txt2notes converter used a module that was not present on macOS (File::Type). That
+    module is now included in the converter suite.
+
+Version 1.10:
+  New Converters:
+  - yojimbo:	Barebone's Yojimo file export converter (converter name: yojimbo)
+  - msecure5:	mSecure version 5 (converter name 'msecure5', use 'msecure' for older versions)
+  - chrome:	Chrome login and credit card autofill data
+
+  Changed:
+  - onepif2html: Renamed to onepif
+  - Deprecated the --nowatchtower option, and replaced it with --notimestamps.  By default, if a
+    password manager supports record time stamps, they will be used to set the entry's time stamps
+    within 1Password.  Use --notimestamps to allow 1Password to set the time stamps as it creates
+    the records (i.e. the time you import the 1PIF file).
+  - Deprecated the --modified option supported by some converters.  Time stamps on records are now
+    set by default, unless the --notimestamps option is used.
+  - Minor changes to several converters for consistency, to conceal certain fields such as pins,
+    combination lock numbers, etc, and to properly label fields that should be password-checked
+    (or not).  Converters: datavault, ewallet, handysafe, msecure, passwordsplus, roboform, safeincloud,
+    safewallet, spbwallet splashid, wallet4.
+  - Moved common CPAN mdules into a Modules directory for clean-up, and to facilitate building the
+    zip archive.
+  - Removed the directory change from the install_modules.bat file and put the instructions back into
+    the README.  Too many users would miss the direcotry change when re-running the converter after
+    closing the command shell.  Also added a note about changing the working drive for users who have
+    their user's folder redirected to a non-C: drive.
+
+  Fixed:
+  - onepif2html: Prevent section names for empty sections from being output.
+  - keychain: Skip useless keychain entries that have no attributes (or data).
+  - passworddepot: Updated the date parsing to accept dot as a date separator (reported by a user).
+  - Change how external shell commands are called when needed, to avoid issues when file names contain
+    shell metacharacters.  The --debug option could trigger the issue, and the new Yojimbo converter
+    calls out to an external command to parse an Apple binary PLIST (for webarchive files).
+  - truekey: updated converter to handle the CSV output by more recent versions of True Key.
+  - Updated to securely handle Perl 5.26's removal of dot from the INC path.
+  - clipperz: the JSON export is now a combination of HTML+JSON - the JSON is embedded in a hidden
+    textarea portion of the HTML.
+  - stickypassword: Fixed some issues when using Perl 5.26 or higher.
+  - datavault: Fixed a few mislabeled vehicleinfo field keys.
+  - spbwallet: membership's PIN code was inadvertently going into Notes.
+  - Attachments created by the converter could be corrupted on Windows.
+  - onepif: This converter wasn't working for the HTML formatters when the 1PIF was generated using
+    1Password 4 for Windows, whose exported 1PIF is inconsistent and non-standard.
+
+  New: 
+  - The converter suite now has the ability to safely test for insecure password using the Troy Hunt
+    Pwned Passwords list.  This feature is enabled using the --checkpass option.  See the README.pdf
+    for more details.  The code used to perform these checks is *not* loaded when the option is not
+    supplied.
+  - The keychain converter now decrypts macOS keychains.
+  - AppleScript_Conversion_Helper: Many changes to simplify macOS keychain conversion.
+  - AppleScript_Conversion_Helper: Will now ask for location of the convert_to_1p4 folder if it is not
+    found on the Desktop.
+  - onepif: Replaces the former onepif2html converter.  It now accepts the name of a "formatter"
+    using the --format option.  A few formatters are available in the Formatters directory.
+    The default is html_compact.  A formatter is specified using the --format option and the name of
+    a formatter (its non-suffixed name, e.g. --format html_expanded).  New formatters can be added as
+    required by writing the code, naming them appropriatly, and placing them into the Formatters
+    directory.  Currently XLST (.xls) and Perl module (.pm) code is supported.  The name of the formatter
+    specifies its output format, its descriptive meaning, and the code employed in the file.  The general
+    naming scheme is <output format>_<descriptive name>.<code suffix>.  For example, html_expanded.xls will
+    output "html", create an .html file, and will be processed using XML stylesheet transformations (due to
+    the .xsl suffix).  Its descriptive part is simply "expanded" (one can argue that's not very descriptive).
+    If there is no _<descriptive name> part in the filename, it is expected that the <output format> is
+    sufficient to serve as the description as well (example: csv.pm will convert to CSV).
+  - onepif: The XSTL stylesheets have been changed a bit, especially the html_expanded stylesheet (formerly
+    the onepif2html2 converter).  It is now more readable with larger fonts, and places the created and
+    modified dates to the top right area of the item.
+  - onpif: The --outfile option is now usable so the output file and suffix can be specfied via command line.
+    File suffixes will be taken from the specified formatter's name.
+  - onpif: Now outputs a file name of 1P_converted.<suffix> where <suffix> reflects the chosen formatter.
+    Examples: 1P_converted.html, 1P_converted.csv.
+  - onpif: Now supports a --percategory option to output items into category-specific files (especially
+    useful for the csv formatter).
+  - roboform: Converter now supports adding custom field names and patterns to the converter to match any
+    unmatched field names.  There are username and password regular expression patterns, and they are listed
+    in priorty order, such that when there are multiple form strings present in the Roboform output, the
+    higher priority matches are used to designate the username and password fields.
+  - roboform: Converter now supports adding language-specific strings to the converter to detect the export
+    type.
+  - Added menu style type checking in the PIF generator for a Bank Account's (account) "type" field, and
+    Identity's "sec" field.  Unsupported types go to notes.
+  - csv: Added support for more categories: Bank Account, Identity, Password, and Social Security.
+  - msecure: Added support for reading localization files from within the Languages directory, when they are
+    not found in localation used by version 3.5.x.
+  - msecure: Added new option --sepchar to allow defining the CSV separator character, useful for non-English
+    locales that use comma as a digits separator.  Usage: --sepchar ";"
+  - msecure: Added a check for the number of columns detected per row to help users handle issues with the
+    wrong sepeator character, or when the exported CSV has been altered incorrectly.  The converter will
+    abort if there are not at least 4 columns.
+  - msecure: Added new option --dumpcats to dump some statistics about matched/unmatched categories in the
+    export, the help in customizing the converter.  It will output the expected vs actual field counts, and
+    list the titles of each entry under the number of fields found for the entry.
+  - msecure: Add the mSecure Type (category) as a tag in the form of mSecure::TypeName.
+  - safeincloud: Added a minimum field match threshold system to better detect categories from the ambiguous
+    field names in the XML export.
+  - msecure: new option --dumpcats will summarize the export's list of the categories and their field counts,
+    the help in customization.
+  - keeper: Converter updated to handle version Keeper Desktop 10.
+  - keepass2: Fixed a problem with attachment creation (status result was being tested w/the wrong operator).
+    Thanks: Ross Sechler.
+  - keepass2: Fixed two typos in the attribute name LastModificationTime.  Thanks: Eamon Hetherton.
+  - msecure5: New converter named msecure5 for version 5 of mSecure.  Use the older 'msecure' for versions
+    prior to version 5.
+  - csv: Remove a BOM if one exists.
+  - Added more menu item matching in the PIF generator (categories: database, email, wireless).
+  - csv: Now supports columns 'modified' and 'created', to set the record's time stamps.  These are Unix epoch
+    values (seconds since 1/1/1970).
+  - keeper: Converter updated to handle version Keeper Desktop 12 on Windows, which now includes a BOM.
+
+  Internal Changes:
+  - vcard: removed extraneous assigment to opts variable
+  - Including the module RFT::Tokenizer with the distribution, for Yojimbo.
+  - keyfinder: removed extraneous comments left over from developement
+
+Version 1.09:
+  New Converters:
+  - passwordsafe:	Password Safe (pwsafe) (converter name: passwordsafe).
+  - stickypassword:	Sticky Password (converter name: stickypassword).
+  - wallet4:		Subsembly Wallet 4X,4W
+  - truekey:		Intel True Key JSON converter (export supports logins only)
+  - keyfinder:		Key Finder (Mac Product Key Finder)
+
+  Fixed:
+  - Clarify SPB Wallet export section in the README file.
+  - Check for the existence of the export file before passing it onto the converter.
+  - Added tag list parameter to help output for --tag option.
+  - Added --tag option description to the README.
+  - Handle a possible "version" line in an iCloud keychain export for keychain converter.
+  - The roboform converter was not clearing the per-entry variable used to collect attibutes. Shame.
+  - The onepif2html converter was outputting unnecessary web form details for Login items.
+  - Avoid 'undefined' warning in safeincloud converter.
+  - In keychain converter, use 'type' = "note" to indicate a secure note instead of 'desc' whose
+    value string may be localized (and not 'secure note').
+  - Updated the README files to reflect 1Passwords new Import dialogs.
+  - Fixed some CSS and HTML errors in the onepif2html converter.
+  - The new wallet4 converter was not encoding the language file correctly (as UTF8).
+  - Converter keepass2 was in some cases incorrectly handling the status result of decompressing an
+    attachment, and in this case, was also prematurely aborting the import conversion, causing
+    the inability to create the 1PIF output file.
+  - Converter keepassx didn't handle timestamps with the value "Never" when --modified was in use.
+  - Converter passwordagent updated to support the new XML export format for versions above 2.6.3.
+  - Added converter onepif2html2 to the AppleScript Helper temporarily.  It is a temporary converter
+    producing expanded Secure Notes output, until a satisfactory output format is determined.
+  - Updates to the AppleScript Conversion Helper to work correctly on OS X Sierra.  Due to sandboxing,
+    the script now requires the convert_to_1p4 folder to be placed on the Desktop.  This hard-coded
+    path to the converter script folder simplifies user interaction.
+
+  New: 
+  - Added some additional debug code to the keychain converter to help track down an issue.
+  - Added password history support to PIF modules.
+  - Added initial support for Google Apps export of Contacts (vCards).
+  - The onepif2html converter will accept the 1PIF bundle directory name (and uses the file data.1pif
+    contained within).
+  - Converter keepass2 will store an entry's historic passwords (from the History element) into
+    1Password's Previously used passwords list.
+  - Converter csv now supports a CSV file containing Credit Card and Membership entries.  Currently
+    the converter supports Logins, Credit Cards, and Memberships, only one category per CSV file.
+  - AppleScript Conversion Helper now accepts additional command line options.
+
+  Changed:
+  - Updated two 1.08 log notes below: one spelling correction, and one correcting the location of
+    function normalize_card_data().
+  - Tighten username and password regular expressions in roboform converter.
+  - Updated the Strawberry Perl links in the README files to the latest Perl version, and simplified the
+    command line for installing the required modules.  A new batch script is used to install the modules
+    and set the working directory.
+
+  Internal Changes:
+  - Added an assertion to ensure that section entries never contain null values for key attributes.
+  - Removed some old, commented-out, no longer used code in the roboform converter.
+
+Version 1.08:
+  New Converters:
+  - RoboForm converter now available.
+  - Keeper Desktop converter now available.
+  - Txt2notes converter now available, converts text files into Secure Notes.
+  - F-Secure KEY converter now available.
+  - Passwords Plus converter now available (OS X).
+
+  New Features:
+  - Option --addfields or -a will create custom fields for non-mappable fields instead of placing
+    them into notes.
+  - Option --tags or -t will add the specified comma-separated list of tags to each record.
+  - The keepassx converter will decode and convert an entry's attachment. It is placed in a folder
+    named 1P4_Attachments in the same location that the 1P4_import.1pif file will be created.  An entry's
+    attachment is placed in a sub-directory named with the entry's Title.
+  - The vcard converter option --securenote will place vCard data into a Secure Note, with custom fields
+    similar to an Identity.
+  - The 1PIF module supports icons if either of the Perl 'GD' or 'Image::Magick' libraries are available.
+  - The vCard converter will include icons when the --icon option is specified (and the required
+    library is available - see previous note).
+  - Added more import types to handysafe converter; added a multiple field-matching system to assist
+    category detection.
+  - The handysafe converter now has support for localization (lang nl-nl).  More languages will be added
+    as requested.
+  - Languages directory for per-converter language translation files.
+  - Added output diagnostic to onepif2html converter to indicate the name of the created output file.
+  - Add support for 1Password's 'Password' category.
+  - The csv converter now accepts a Tags column.  The comma-separated values within that column will be
+    imported as 1Password Tags.
+
+  Changed:
+  - The --help option is a little more instructive.
+  - Converter ewallet's combolock and voicemail categories go to the Password category now.
+  - Converter splashid's frequentflyer now maps to the 1Password Rewards category.
+
+  Fixed:
+  - Several fixes for the onepif2html print converter: strip the BOM on Windows 1PIF exports; gracefully
+    handle unknown 1PIF typeNames; support the legacy typeNames allowed in the Windows UI.
+  - Minor Perl syntax changes throughout the code to satisfy Perl versions > 5.16.
+  - Remove extraneous, but harmless setting of imptypes in essetialpim converter.
+  - Remove extraneous comment in msecure converter; fixed duplicate key in frequentflyer definition.
+  - Splashid converter was not honoring --imptypes for user-defined types (user defined types are
+    specified as 'userdefined'.
+  - Splashid converter was not converting \b end of line characters into newline characters in
+    an entry's notes section (Windows only).
+  - The debug function unfold_and_chop() was not honoring its maxlen parameter.
+  - The debug function print_record was not outputing notes.
+  - Date parsing was broken in some cases for converters ewallet and lastpass.
+  - Several ewallet converter fixes.
+  - The safewallet converter was incorrectly detecting a web login category as an irc category.
+  - Several vcard converter fixes: 1) prevent vcard converter from importing an encoded photo into the notes
+    section; 2) converter was bailing after the first entry in a list of vcards.  3) Uses a new module for
+    parsing / packaging vCard data (Text::vFile::asData). 4) Handles vCard exports via iCloud.
+  - The handysafe converter was not picking up root-level nodes.
+  - Some debug output errors in Utils::PIF.pm.
+  - A date converter routine for some converters could cause an error under anomalous conditions - affected
+    converters: dataguardian, ironkey, keepass2, keepassx, keychain, passwordagent, passworddepot, spbwallet.
+  - The datavault converter on Windows could botch some multiline entries in the notes section.
+  - The onepif2html converter was not outputing a label for unlabeled URLs.
+  - The onepif2html converter was not handling the Password category.
+  - Converter keychain now avoids outputting a 0x0 (nil) hexvalue as a URI protocol.
+  - Converter keychain export instructions for iCloud keychain export was missing part of the fully-qualified
+    keychain name (e.g. local-icloud should have been local-icloud.keychain).
+
+  Internal Changes:
+  - Miscellaneous code refactoring and consolidating.
+  - New module Utils::Normalize.
+  - Simplify the lastpass converter's %card_field_specs table.
+  - convert_to_1p4 will now accept and pass to a converter more than a single filename argument.
+  - Modified the %card_field_specs table to include custom field definitions within the table.
+  - Made the normalize_card_data() function universal, and moved it to Utils::Normalize.pm.
+  - Code updates to work with Perl versions newer than the old requirement of Perl 5.16.
+  - Debug output will include info about the export file supplied on the command line.
+  - Many code cleanups.
+
+Version 1.07:
+  - New: The keepass2 converter will decode and convert an entry's attachments. They are placed in a folder
+    named 1P4_Attachments in the same location that the 1P4_import.1pif file will be created.  An entry's
+    attachments are placed in a sub-directory named with the entry's Title.
+  - Fix: The keepass2 converter sometimes failed to parse an entry's modification time (and theoretically could
+    have failed to parse other items correctly).  To resolve this, and to robustly support attachments, the parser
+    was rewritten, using different XML parsing modules.
+  - Fix: Essentialpim converter might have missed detection of the notes or title of a customized entry due
+    to an off-by-one error iterating through a loop.
+  - New: CSV converter.  This converter is just a basic CSV converter that currently only supports Logins and
+    Notes.  It will be customized or updated as necessary to accommodate specific user needs.
+  - Change: make UUID values all uppercase; 1Password was expecting these when using OPVault (used for creating
+    band files).
+
+Version 1.06:
+  - New: LicenseKeeper converter now available.
+  - New: Password Agent converter now available.
+  - New: Spb Wallet converter now available.
+  - New: AppleScript helper applet makes conversion easier for OS X users.  Just drag your password manager's
+    exported data file onto the helper applet "AppleScript_Conversion_Helper", and follow the instructions.
+  - Change: Updated the README to accommodate the new OS X AppleScript_Conversion_Helper.
+  - Fix: Update the README to provide a workaround for problematic exports with the LastPass extension in Chrome.
+  - Fix: PasswordWallet conveter now handles the reserved auto-type characters that may be present in
+    username or password fields.  The tab and reverse tab characters will split the field when within
+    a value, and data that follows will be placed in Notes as username- or password-specific
+    field/value pairs, as in "username_part_2: next", "username_part_3: field", etc.
+  - Change: Changed the stylesheet used to render the README.pdf.
+
+Version 1.05:
+  - New: OS X Contacts converter (vcard), converts Contacts exports into identity entries.
+  - New: 1PIF to HTML converter (onepif2html) for record printouts.
+  - New: IronKey Identity Manager converter now available.
+  - New: Norton Identity Safe converter now available.
+  - New: Country code patterns added to convert common country strings into 1Password country codes (used for
+    address types).
+  - Change: default output file is now 1P_export.1pif.
+  - Change: README modified to accommodate usage of new onepif2html converter.
+  - Fix: README.pdf had white-on-white text when viewed in Acrobat.
+
+Version 1.04:
+  - New: Data Guardian converter now available.
+  - New: Datavault converter now available.
+  - New: Passpack converter now available.
+  - New: PasswordWallet converter now available.
+  - New: Option --modified will set the 'last modified' field for a 1Password entry based on the exported modification
+    date provided by a password manager's export data.  See 'Option: --modified' in the README file.
+  - Fix: An item's notes from OS X Keychain converter could contain a stringified ARRAY reference name.
+  - Fix: The modification and creation dates were missing from the notes section for the OS X Keychain converter.
+  - Internal: Remove extraneous, remnant argument to UUID generation call.
+
+Version 1.03:
+  - New: EssentialPIM converter now available.
+  - New: Password Depot converter now available.
+  - New: Folder creation is supported, but disabled by default.  Password managers that support folders or groups are:
+    ewallet, handysafe, keepass2, keepassx, lastpass, msecure, safewallet, splashid.  Include the --folders option on
+    the command line to enable folders.  Tags will still include colon-separated folder hierarchies.  See the README
+    for caveats when using this option.
+  - Fix: The 'location' field was not being set - it is required for 1Password for Window's extension to see the entry.
+  - Fix: Typo in README file that left an extra directory level in the conversion command.
+  - New: Added Secure Notes export to Keychain converter.  Also, added an entry to the table of ignored svce names.
+
+Version 1.02:
+  - Change: Set default decoder for SplashID back to macroman.
+  - New: Specifically support SplashID's 'Addressess' category (into Secure Notes).
+  - Fix: Converter keepass2 was incorrectly splitting a group name that contained certain XML-reserved characters.
+  - Fix: README updates: clarify LastPass export instructions; enumerate and better describe Step 4; clarify
+    that attachments are not unsupported; describe a workflow for creating Folders from tagged values; remove extra
+    subdirectory layer onepassword-utilities, and instruct users to place convert_to_1p4 directly onto the Desktop.
+  - Change: The README file eliminates the extra folder layer onepassword-utilities and instead refers to the
+    convert_to_1p4 folder.
+
+Version 1.01:
+  - Fix: More precisely construct the path to the Desktop on Windows, for the 1PIF export file, and add some debug output
+    to help in any future issues.
+  - New: Update SafeWallet converter to support the Windows 3.x XML version, and new categories 'irc' and 'server'.
+  - Fix: SplashID converter was mishandling two or more adjacent F records.
+  - Info: SplashID export encoding is suspect - added commented out decoding line in code to help users try alternate
+    decoding (UTF-8 vs. macroman).
+  - Change: Updated documentation to switch from ActivePerl to Strawberry Perl, since ActiveState removed 5.16 from their
+    free downloads.
+
+Version 1.00:
+  - Initial release of password manager module-based converter which consolidates previous converters into a single utility.
+  - Outputs converted data to 1Password's robust 1PIF format.
+  - Obsoletes CSV exporter available in previous converters.
+  - Several new converters added.
+  - Single, comprehensive README file.
+  - Generalized 1PIF creation module, supports adding customized sections and fields to entries.
+  - Table-driven password manager type/field recognizer, supports import record retyping and splitting.
+  - Supports selection of both import and export types.
+  - Lossless date-type handling, where sensible; unexpected, lossy, or nonsense dates are retained in notes.
+  - Many improvements and enhancements to previous conveters.
+  - All converters tested/retested on OS X and Windows (where relevant).

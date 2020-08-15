@@ -1,0 +1,899 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1671\cocoasubrtf500
+{\fonttbl\f0\fnil\fcharset0 Verdana;\f1\fnil\fcharset0 Verdana-Bold;\f2\fnil\fcharset0 Verdana-Italic;
+}
+{\colortbl;\red255\green255\blue255;\red76\green78\blue78;\red0\green0\blue0;\red108\green5\blue211;
+\red0\green0\blue255;\red64\green128\blue0;\red0\green22\blue176;\red68\green21\blue176;\red251\green0\blue7;
+}
+{\*\expandedcolortbl;;\csgenericrgb\c29999\c30457\c30457;\csgenericrgb\c0\c0\c0;\csgenericrgb\c42337\c1841\c82833;
+\csgenericrgb\c0\c0\c100000;\csgenericrgb\c25000\c50001\c0;\csgenericrgb\c0\c8656\c68986;\csgenericrgb\c26552\c8264\c69162;\cssrgb\c100000\c0\c0;
+}
+\deftab480
+\pard\pardeftab480\slleading40\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf2 -- Copyright 2019 Mike Cappella (mike@cappella.us)\cf3 \
+\cf2 --\cf3 \
+\
+
+\f1\b \cf3 use
+\f0\b0 \cf3  \cf4 AppleScript\cf3  \cf5 version\cf3  \cf3 "2.4"\cf3  \cf2 -- Yosemite (10.10) or later\cf3 \
+
+\f1\b \cf3 use
+\f0\b0 \cf3  
+\f2\i \cf5 scripting additions
+\f0\i0 \cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  
+\f1\b \cf5 run
+\f0\b0 \cf3 \
+	
+\f1\b \cf3 tell
+\f0\b0 \cf3  
+\f1\b \cf3 me
+\f0\b0 \cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf5 open
+\f0\b0 \cf3  \{\}\
+
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf5 run
+\f0\b0 \cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  
+\f1\b \cf5 open
+\f0\b0 \cf3  \cf6 filelist\cf3 \
+	
+\f1\b \cf3 global
+\f0\b0 \cf3  \cf6 cmdlineArgs\cf3 \
+	
+\f1\b \cf3 global
+\f0\b0 \cf3  \cf6 converter_folder\cf3 \
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 cmdlineArgs\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 " -v"\cf3 \
+	\cf2 --set converter_folder to POSIX path of ((path to me as text) & "::")\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 converter_folder_mac\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  (
+\f1\b \cf7 path to
+\f0\b0 \cf3  
+\f2\i \cf8 desktop folder
+\f0\i0 \cf3  \cf7 as\cf3  
+\f2\i \cf5 text
+\f0\i0 \cf3 ) & \cf3 "mrc-converter-suite"\cf3 \
+	
+\f1\b \cf3 try
+\f0\b0 \cf3 \
+		\cf6 converter_folder_mac\cf3  
+\f1\b \cf3 as
+\f0\b0 \cf3  
+\f2\i \cf5 alias
+\f0\i0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 converter_folder\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf4 POSIX path\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 converter_folder_mac\cf3 \
+	
+\f1\b \cf3 on
+\f0\b0 \cf3  
+\f1\b \cf3 error
+\f0\b0 \cf3 \
+		
+\f1\b \cf7 display dialog
+\f0\b0 \cf3  \cf3 "The mrc-converter-suite does not appear to be on your Desktop.  Please locate it for me."\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 converter_folder\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf4 POSIX path\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f2\i \cf5 item
+\f0\i0 \cf3  \cf3 1\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \{(
+\f1\b \cf7 choose folder
+\f0\b0 \cf3  \cf7 with prompt\cf3  \cf3 "Locate the mrc-converter-suite folder"\cf3  \cf7 default location\cf3  (
+\f1\b \cf7 path to
+\f0\b0 \cf3  
+\f2\i \cf8 desktop folder
+\f0\i0 \cf3 ))\}\
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 try
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \{\cf6 converterName\cf3 , \cf6 converter\cf3 \} 
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf9 select_converter\cf3 (\cf6 converter_folder\cf3 )\
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converterName\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  
+\f2\i \cf4 false
+\f0\i0 \cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3  
+\f1\b \cf3 return
+\f0\b0 \cf3  \{\}\
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \{\cf6 fileOrFolder\cf3 , \cf6 dialogText\cf3 , \cf6 exportfilePathQuoted\cf3 \} 
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf9 get_export_name\cf3 (\cf6 filelist\cf3 , \cf6 converter\cf3 )\
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 dialogResult\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf7 display dialog
+\f0\b0 \cf3  \cf3 "Ready to use the "\cf3  & \cf6 converterName\cf3  & \cf3 " converter to convert the "\cf3  & \cf6 dialogText\cf3  & \'ac\
+		\cf4 linefeed\cf3  & \cf4 linefeed\cf3  & \cf3 "You may enter additional converter options below:"\cf3  \cf7 buttons\cf3  \{\cf3 "Cancel"\cf3 , \cf3 "Convert"\cf3 \} \'ac\
+		\cf7 default button\cf3  \'ac\
+		\cf3 "Convert"\cf3  \cf7 with icon\cf3  
+\f2\i \cf8 caution
+\f0\i0 \cf3  \cf7 with title\cf3  \cf3 "Convert "\cf3  & \cf6 converterName\cf3  & \cf3 " "\cf3  & \cf6 fileOrFolder\cf3  & \'ac\
+		\cf3 " for 1Password import"\cf3  \cf7 default answer\cf3  \cf3 ""\cf3 \
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 extraOptions\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf8 text returned\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 dialogResult\cf3 \
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 extraOptions\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  
+\f1\b \cf3 not
+\f0\b0 \cf3  \cf3 ""\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 cmdlineArgs\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 cmdlineArgs\cf3  & \cf3 " "\cf3  & \cf6 extraOptions\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "keychain"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf7 display dialog
+\f0\b0 \cf3  \cf3 "After the Terminal opens, enter your Keychain's password at the prompt, then hit Enter"\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 cdCommand\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 "cd "\cf3  & \cf4 quoted form\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 converter_folder\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 convertCommand\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 "/usr/bin/perl convert.pl "\cf3  & \cf6 converter\cf3  & \cf3 " "\cf3  & \cf6 exportfilePathQuoted\cf3  & \cf6 cmdlineArgs\cf3 \
+	\
+	\cf9 do_shell_command\cf3 (\cf6 cdCommand\cf3  & \cf3 " && "\cf3  & \cf6 convertCommand\cf3 )\
+
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf5 open
+\f0\b0 \cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 select_converter\cf3 (\cf6 converter_folder\cf3 )\
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 theScript\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 converter_folder\cf3  & \cf3 "/convert.pl"\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 converterNames\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \{\}\
+	\
+	\cf2 -- get the list of converters supported on macOS\cf3 \
+	
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  \cf3 "perl "\cf3  & (
+\f1\b \cf3 the
+\f0\b0 \cf3  \cf4 quoted form\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 theScript\cf3 ) & \cf3 " --info macos"\cf3 \
+	
+\f1\b \cf3 repeat
+\f0\b0 \cf3  
+\f1\b \cf3 with
+\f0\b0 \cf3  \cf6 theItem\cf3  
+\f1\b \cf3 in
+\f0\b0 \cf3  
+\f1\b \cf3 the
+\f0\b0 \cf3  
+\f2\i \cf5 paragraphs
+\f0\i0 \cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f1\b \cf3 the
+\f0\b0 \cf3  \cf4 result\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \{\cf6 c\cf3 , \cf6 f\cf3 \} 
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf9 Split\cf3 (\cf6 theItem\cf3 , \cf3 "::"\cf3 ) 
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f1\b \cf3 me
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  
+\f1\b \cf3 the
+\f0\b0 \cf3  
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 converterNames\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \{\cf6 converter\cf3 :\cf6 c\cf3 , \cf6 fullname\cf3 :\cf6 f\cf3 \}\
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 repeat
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf7 choose from list
+\f0\b0 \cf3  \cf9 get_converter_names\cf3 (\cf6 converterNames\cf3 ) \cf7 with prompt\cf3  \cf3 "Select converter to use"\cf3  \cf7 with title\cf3  \cf3 "Select converter"\cf3  \cf7 OK button name\cf3  \cf3 "Select"\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 converterName\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf3 the
+\f0\b0 \cf3  \cf4 result\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf9 converter_from_textname\cf3 (\cf6 converterName\cf3  
+\f1\b \cf3 as
+\f0\b0 \cf3  
+\f2\i \cf5 string
+\f0\i0 \cf3 , \cf6 converterNames\cf3 )\
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \{\cf6 converterName\cf3 , \cf6 converter\cf3 \}\
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 select_converter\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 get_export_name\cf3 (\cf6 filelist\cf3 , \cf6 converter\cf3 )\
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePath\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f2\i \cf5 null
+\f0\i0 \cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePathQuoted\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f2\i \cf5 null
+\f0\i0 \cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 dialogText\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f2\i \cf5 null
+\f0\i0 \cf3 \
+	\
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "yojimbo"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 importType\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 "folder"\cf3 \
+	
+\f1\b \cf3 else
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "keychain"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 importType\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 "keychain"\cf3 \
+	
+\f1\b \cf3 else
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "chrome"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 importType\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 "Chrome database"\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 dialogText\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 importType\cf3  & \cf3 "."\cf3 \
+	
+\f1\b \cf3 else
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "firefox"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 importType\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 "Firefox database"\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 dialogText\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 importType\cf3  & \cf3 "."\cf3 \
+	
+\f1\b \cf3 else
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 importType\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 "file"\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "chrome"\cf3  
+\f1\b \cf3 or
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "firefox"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePath\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 ""\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePathQuoted\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 ""\cf3 \
+		\
+	
+\f1\b \cf3 else
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3  (
+\f1\b \cf5 count
+\f0\b0 \cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 filelist\cf3 ) \uc0\u8805  \cf3 1\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3  \cf2 -- 	drag/drop\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePath\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf4 POSIX path\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f2\i \cf5 item
+\f0\i0 \cf3  \cf3 1\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 filelist\cf3 \
+		\
+	
+\f1\b \cf3 else
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "keychain"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePath\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf9 get_keychain_path\cf3 ()\
+	
+\f1\b \cf3 else
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  \cf3 "yojimbo"\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePath\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf4 POSIX path\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f2\i \cf5 item
+\f0\i0 \cf3  \cf3 1\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \{(
+\f1\b \cf7 choose folder
+\f0\b0 \cf3  \cf7 with prompt\cf3  \cf3 "Select your exported data folder"\cf3  \cf7 default location\cf3  (
+\f1\b \cf7 path to
+\f0\b0 \cf3  
+\f2\i \cf8 desktop folder
+\f0\i0 \cf3 ))\}\
+	
+\f1\b \cf3 else
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePath\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf4 POSIX path\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f2\i \cf5 item
+\f0\i0 \cf3  \cf3 1\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \{(
+\f1\b \cf7 choose file
+\f0\b0 \cf3  \cf7 with prompt\cf3  \cf3 "Select your exported password file"\cf3  \cf7 default location\cf3  (
+\f1\b \cf7 path to
+\f0\b0 \cf3  
+\f2\i \cf8 desktop folder
+\f0\i0 \cf3 ))\}\
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 exportfilePathQuoted\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  
+\f2\i \cf5 null
+\f0\i0 \cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 exportfilePathQuoted\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf4 quoted form\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 exportfilePath\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 dialogText\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  
+\f2\i \cf5 null
+\f0\i0 \cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 dialogText\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 importType\cf3  & \cf3 " named:"\cf3  & \cf4 linefeed\cf3  & \cf4 linefeed\cf3  & \cf6 exportfilePath\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3 \
+	\
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \{\cf6 importType\cf3 , \cf6 dialogText\cf3 , \cf6 exportfilePathQuoted\cf3 \}\
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 get_export_name\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 do_shell_command\cf3 (\cf6 cmd\cf3 )\
+	
+\f1\b \cf3 tell
+\f0\b0 \cf3  
+\f2\i \cf5 application
+\f0\i0 \cf3  \cf3 "Terminal"\cf3 \
+		
+\f1\b \cf5 activate
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 if
+\f0\b0 \cf3  
+\f1\b \cf3 not
+\f0\b0 \cf3  (
+\f1\b \cf5 exists
+\f0\b0 \cf3  
+\f2\i \cf5 window
+\f0\i0 \cf3  \cf3 1\cf3 ) 
+\f1\b \cf3 then
+\f0\b0 \cf3 \
+			
+\f1\b \cf5 reopen
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 if
+\f0\b0 \cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  
+\f1\b \cf3 the
+\f0\b0 \cf3  \cf4 position\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f1\b \cf3 front
+\f0\b0 \cf3  
+\f2\i \cf5 window
+\f0\i0 \cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \{\cf3 20\cf3 , \cf3 20\cf3 \}\
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  
+\f1\b \cf3 the
+\f0\b0 \cf3  \cf4 number of rows\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f1\b \cf3 front
+\f0\b0 \cf3  
+\f2\i \cf5 window
+\f0\i0 \cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 50\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  
+\f1\b \cf3 the
+\f0\b0 \cf3  \cf4 number of columns\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  
+\f1\b \cf3 front
+\f0\b0 \cf3  
+\f2\i \cf5 window
+\f0\i0 \cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 150\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 shell\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf5 do script
+\f0\b0 \cf3  \cf3 "clear; clear"\cf3  \cf5 in\cf3  
+\f2\i \cf5 window
+\f0\i0 \cf3  \cf3 1\cf3 \
+		
+\f1\b \cf5 do script
+\f0\b0 \cf3  (\cf6 cmd\cf3 ) \cf5 in\cf3  \cf6 shell\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 tell
+\f0\b0 \cf3 \
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 do_shell_command\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 get_converter_names\cf3 (\cf6 this_list\cf3 )\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 ret_list\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \{\}\
+	
+\f1\b \cf3 repeat
+\f0\b0 \cf3  
+\f1\b \cf3 with
+\f0\b0 \cf3  \cf6 theItem\cf3  
+\f1\b \cf3 in
+\f0\b0 \cf3  \cf6 this_list\cf3 \
+		
+\f1\b \cf3 set
+\f0\b0 \cf3  
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 ret_list\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 fullname\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 theItem\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 repeat
+\f0\b0 \cf3 \
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \cf6 ret_list\cf3 \
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 get_converter_names\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 converter_from_textname\cf3 (\cf6 this_item\cf3 , \cf6 this_list\cf3 )\
+	
+\f1\b \cf3 repeat
+\f0\b0 \cf3  
+\f1\b \cf3 with
+\f0\b0 \cf3  \cf6 theItem\cf3  
+\f1\b \cf3 in
+\f0\b0 \cf3  \cf6 this_list\cf3 \
+		
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 this_item\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  
+\f1\b \cf3 equal to
+\f0\b0 \cf3  \cf6 fullname\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 theItem\cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3  
+\f1\b \cf3 return
+\f0\b0 \cf3  \cf6 converter\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 theItem\cf3 \
+	
+\f1\b \cf3 end
+\f0\b0 \cf3  
+\f1\b \cf3 repeat
+\f0\b0 \cf3 \
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \cf3 0\cf3 \
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 converter_from_textname\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 Split\cf3 (\cf6 s\cf3 , \cf6 delim\cf3 )\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 old\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf4 AppleScript's\cf3  \cf4 text item delimiters\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf4 AppleScript's\cf3  \cf4 text item delimiters\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 delim\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 a\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf3 every
+\f0\b0 \cf3  
+\f2\i \cf5 text item
+\f0\i0 \cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 s\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf4 AppleScript's\cf3  \cf4 text item delimiters\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 old\cf3 \
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \cf6 a\cf3 \
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 Split\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 Join\cf3 (\cf6 l\cf3 , \cf6 delim\cf3 )\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf4 AppleScript's\cf3  \cf4 text item delimiters\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 delim\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 s\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf6 l\cf3  
+\f1\b \cf3 as
+\f0\b0 \cf3  
+\f2\i \cf5 string
+\f0\i0 \cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf4 AppleScript's\cf3  \cf4 text item delimiters\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf3 ""\cf3 \
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \cf6 s\cf3 \
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 Join\cf3 \
+\
+\cf2 --\cf3 \
+\cf2 -- macOS Keychain related items below\cf3 \
+\cf2 --\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 getKeychainList\cf3 ()\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 ret\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf7 do shell script
+\f0\b0 \cf3  \cf3 "security list-keychains | perl -Mv5.16 -ne '!m#/System\\\\.keychain# and s/^\\\\s+\\"(.+?(?:-db)?)\\"$/$1/ and say $1'"\cf3 \
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 ret\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  
+\f2\i \cf4 false
+\f0\i0 \cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3  
+\f1\b \cf3 error
+\f0\b0 \cf3  \cf5 number\cf3  \cf3 -128\cf3 \
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \cf9 Split\cf3 (\cf6 ret\cf3 , \cf3 "\
+"\cf3 )\
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 getKeychainList\cf3 \
+\
+
+\f1\b \cf3 on
+\f0\b0 \cf3  \cf9 get_keychain_path\cf3 ()\
+	
+\f1\b \cf3 global
+\f0\b0 \cf3  \cf6 cmdlineArgs\cf3 \
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 keychain_list\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  \cf9 getKeychainList\cf3 ()\
+	\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 default_keychain\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f2\i \cf5 item
+\f0\i0 \cf3  \cf3 1\cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf6 keychain_list\cf3 \
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 default_keychain_shortname\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf3 last
+\f0\b0 \cf3  
+\f2\i \cf5 item
+\f0\i0 \cf3  
+\f1\b \cf3 of
+\f0\b0 \cf3  \cf9 Split\cf3 (\cf6 default_keychain\cf3 , \cf3 "/"\cf3 )\
+	
+\f1\b \cf3 set
+\f0\b0 \cf3  \cf6 keychain\cf3  
+\f1\b \cf3 to
+\f0\b0 \cf3  
+\f1\b \cf7 choose from list
+\f0\b0 \cf3  \cf6 keychain_list\cf3  \cf7 with prompt\cf3  \cf3 "Select the keychain to export (default: "\cf3  & \cf6 default_keychain_shortname\cf3  & \cf3 "):"\cf3  \cf7 default items\cf3  \cf6 default_keychain\cf3 \
+	
+\f1\b \cf3 if
+\f0\b0 \cf3  \cf6 keychain\cf3  
+\f1\b \cf3 is
+\f0\b0 \cf3  
+\f2\i \cf4 false
+\f0\i0 \cf3  
+\f1\b \cf3 then
+\f0\b0 \cf3  
+\f1\b \cf3 error
+\f0\b0 \cf3  \cf5 number\cf3  \cf3 -128\cf3 \
+	\
+	
+\f1\b \cf3 return
+\f0\b0 \cf3  \cf6 keychain\cf3  
+\f1\b \cf3 as
+\f0\b0 \cf3  
+\f2\i \cf5 text
+\f0\i0 \cf3 \
+
+\f1\b \cf3 end
+\f0\b0 \cf3  \cf9 get_keychain_path\cf3 \
+}
