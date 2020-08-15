@@ -1,8 +1,9 @@
-<div id="wrapper">
-
 # mrc-converter-suite
 
-# A Converter Suite for 1Password
+A Converter Suite for 1Password.
+
+The repository is a mirror of the tool described in [this 1Password forum post](https://discussions.agilebits.com/discussion/comment/494045).
+Mirrored on 15 August 2020 from [the linked Dropbox location](https://www.dropbox.com/sh/a3skeey2zqimdlv/AAD87q6N_EJZ1YoPe5SA35a1a).
 
 - [Instructions](#instructions)
 - [1\. Prepare Your Data](#step1)
@@ -2132,5 +2133,3 @@ If you have questions, problems, comments, or just want to throw stones, please 
 
 Enjoy 1Password!  
 -MrC
-
-</div>
